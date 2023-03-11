@@ -1,5 +1,6 @@
 import { authModalState } from "@/atoms/authModalAtom";
 import { auth } from "@/firebase/clientApp";
+import { FIREBASE_ERRORS } from "@/firebase/errors";
 import { Input, Button, Flex, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
@@ -101,9 +102,10 @@ const SignUp: React.FC = () => {
         }}
         bg="gray.50"
       />
-      {error && (
+      {(error || userError) && (
         <Text textAlign="center" color="red" fontSize="10px">
-          {error}
+          {error ||
+            FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
         </Text>
       )}
 
